@@ -10,11 +10,6 @@ const validateSchema = joi.object({
   email: joi.string().min(5).email({ minDomainSegments: 2 }).required(),
   phone: joi.string().min(3).required(),
 });
-// const updateSchema = joi.object({
-//   name: joi.string().required(),
-//   email: joi.string().required(),
-//   phone: joi.string().required(),
-// });
 
 router.get("/", async (req, res, next) => {
   try {
@@ -56,8 +51,6 @@ router.delete("/:contactId", async (req, res, next) => {
     if (!result) {
       throw requestError(404, "Not found");
     }
-    // res.json(result);
-    // res.json({ message: "Delete success" });
     res.status(200).res.json({ message: "contact deleted" });
   } catch (error) {
     next(error);
