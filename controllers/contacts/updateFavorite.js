@@ -7,7 +7,6 @@ async function updateStatusContact(contactId, body) {
 
 const updateFavorite = async (req, res) => {
   const id = req.params.contactId;
-  //   const result = await Contact.findByIdAndUpdate(id, req.body, { new: true });
   const result = await updateStatusContact(id, req.body);
   if (!result) {
     throw requestError(404, "Not found");

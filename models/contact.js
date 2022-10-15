@@ -5,7 +5,6 @@ const contactSchema = new Schema(
   {
     name: {
       type: String,
-      //   required: true,
       required: [true, "Set name for contact"],
     },
     email: {
