@@ -13,7 +13,7 @@ router.get("/logout", auth, ctrlWrapper(ctrl.signOut));
 router.get("/current", auth, ctrlWrapper(ctrl.getCurrent));
 
 router.patch(
-  "/",
+  "/subscription",
   auth,
   validateBody(updateSubscriptionSchema),
   ctrlWrapper(ctrl.updateSubscription)

@@ -37,7 +37,6 @@ const authSchema = joi.object({
     .email({ minDomainSegments: 2 })
     .required(),
   subscription: joi.string().min(3).valid("starter", "pro", "business"),
-  token: joi.string(),
 });
 
 const updateSubscriptionSchema = joi.object({
