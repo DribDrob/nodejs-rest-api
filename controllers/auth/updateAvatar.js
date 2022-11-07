@@ -20,11 +20,6 @@ const updateAvatar = async (req, res) => {
   const { path: tempUpload, originalname } = req.file;
   await resize(tempUpload);
 
-  // 1st
-  //   const extention = originalname.split(".").pop();
-  //   const filename = `${id}.${extention}`;
-
-  // 2nd
   const extention = path.extname(originalname);
   const filename = `${id}${extention}`;
 
