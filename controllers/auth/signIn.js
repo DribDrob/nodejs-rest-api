@@ -4,6 +4,8 @@ const { User } = require("../../models/user");
 const { requestError } = require("../../utils");
 const { SECRET_KEY } = process.env;
 
+const updateUser = require("./updateUser");
+
 const signIn = async (req, res) => {
   const { email, password } = req.body;
   // is email in database?
@@ -22,7 +24,7 @@ const signIn = async (req, res) => {
     id: user._id,
   };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
-  await User.findByIdAndUpdate(user._id, { token });
+  await updateUser(user._id, { token });
   // response
   res.status(200).json({
     token,

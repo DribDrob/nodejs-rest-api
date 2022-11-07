@@ -24,6 +24,7 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
+    avatarURL: String,
   },
   { versionKey: false, timestamps: true }
 );
@@ -37,7 +38,6 @@ const authSchema = joi.object({
     .email({ minDomainSegments: 2 })
     .required(),
   subscription: joi.string().min(3).valid("starter", "pro", "business"),
-  token: joi.string(),
 });
 
 const updateSubscriptionSchema = joi.object({
@@ -47,8 +47,13 @@ const updateSubscriptionSchema = joi.object({
     .valid("starter", "pro", "business")
     .required(),
 });
+
 userSchema.post("save", handleSaveErrors);
 
 const User = model("user", userSchema);
 
-module.exports = { User, authSchema, updateSubscriptionSchema };
+module.exports = {
+  User,
+  authSchema,
+  updateSubscriptionSchema,
+};
