@@ -18,9 +18,6 @@ describe("test auth routes", function () {
 
   afterEach((done) => {
     mongoose.connection.close(() => done());
-    // mongoose.connection.db.dropCollection(() => {
-    //   mongoose.connection.close(() => done());
-    // });
   });
 
   test("test signUp", async () => {

@@ -2,14 +2,11 @@ const Jimp = require("jimp");
 const path = require("path");
 const fs = require("fs").promises;
 
-const { User } = require("../../models/user");
 const { requestError } = require("../../utils");
+const updateUser = require("./updateUser");
 
 const avatarsDir = path.join(__dirname, "../../", "public", "avatars");
 
-async function updateUserAvatar(userId, body) {
-  return await User.findByIdAndUpdate(userId, body, { new: true });
-}
 async function resize(tempUpload) {
   const image = await Jimp.read(tempUpload);
   await image.resize(250, 250).writeAsync(tempUpload);
@@ -28,7 +25,7 @@ const updateAvatar = async (req, res) => {
 
   await fs.rename(tempUpload, resultUpload);
 
-  const result = await updateUserAvatar(id, { avatarURL });
+  const result = await updateUser(id, { avatarURL });
   if (!result) {
     throw requestError(404, "Not found");
   }
