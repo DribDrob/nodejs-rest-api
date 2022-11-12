@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 const joi = require("joi");
 const { handleSaveErrors } = require("../utils/index");
 
-const emailRegexp = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/;
+const emailRegexp = /^[a-z0-9.]+@[a-z]+\.[a-z]{2,3}$/;
 
 const userSchema = new Schema(
   {
@@ -25,6 +25,14 @@ const userSchema = new Schema(
       default: null,
     },
     avatarURL: String,
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -48,6 +56,15 @@ const updateSubscriptionSchema = joi.object({
     .required(),
 });
 
+const verifyEmailSchema = joi.object({
+  email: joi
+    .string()
+    .min(5)
+    .pattern(emailRegexp)
+    .email({ minDomainSegments: 2 })
+    .required(),
+});
+
 userSchema.post("save", handleSaveErrors);
 
 const User = model("user", userSchema);
@@ -56,4 +73,5 @@ module.exports = {
   User,
   authSchema,
   updateSubscriptionSchema,
+  verifyEmailSchema,
 };

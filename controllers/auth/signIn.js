@@ -10,7 +10,7 @@ const signIn = async (req, res) => {
   const { email, password } = req.body;
   // is email in database?
   const user = await User.findOne({ email });
-  if (!user) {
+  if (!user || !user.verify) {
     throw requestError(401, "Email or password wrong");
   }
   // is password valid?
